@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Alumno {
+private:
+    string nombre;
+    int edad;
+    double nota1;
+    double nota2;
+    double nota3;
+    string estado;
+
+    void actualizarEstado() {
+        if (estaAprobado()) {
+            estado = "Aprobado";
+        } else {
+            estado = "Desaprobado";
+        }
+    }
+
+public:
+    Alumno(string nombre, int edad, double nota1, double nota2, double nota3)
+    : nombre(nombre), edad(edad), nota1(nota1), nota2(nota2), nota3(nota3), estado("") {
+        actualizarEstado();
+    }
+
+    string getNombre() const { return nombre; }
+    int getEdad() const { return edad; }
+    double getNota1() const { return nota1; }
+    double getNota2() const { return nota2; }
+    double getNota3() const { return nota3; }
+    string getEstado() const { return estado; }
+
+    double calcularPromedio() const {
+        return (nota1 + nota2 + nota3) / 3;
+    }
+
+    bool estaAprobado() const {
+        return calcularPromedio() >= 7;
+    }
+
+    void mostrar() const {
+        cout<<"Nombre: "<<nombre<<endl;
+        cout<<"Edad: "<<edad<<endl;
+        cout<<"Nota 1: "<<nota1<<endl;
+        cout<<"Nota 2: "<<nota2<<endl;
+        cout<<"Nota 3: "<<nota3<<endl;
+        cout<<"Promedio: "<<calcularPromedio()<<endl;
+        cout<<"Estado: "<<estado<<endl;
+    }
+};
+
+int main() {
+    vector<Alumno> alumnos;
+    string nombre;
+    int edad;
+    double nota1, nota2, nota3;
+    int numAlumnos;
+
+    cout<<"Digite el numero de alumnos: "; cin>>numAlumnos;
+
+    for (int i = 0; i < numAlumnos; i++) {
+        cout<<endl<<"Alumno "<<i + 1<<endl;
+        cout<<"Digite el nombre del alumno: "; cin>>nombre;
+        cout<<"Digite la edad del alumno: "; cin>>edad;
+        cout<<"Digite la nota 1 del alumno: "; cin>>nota1;
+        cout<<"Digite la nota 2 del alumno: "; cin>>nota2;
+        cout<<"Digite la nota 3 del alumno: "; cin>>nota3;
+        alumnos.push_back(Alumno(nombre, edad, nota1, nota2, nota3));
+    }
+
+    cout<<endl<<"DATOS DE LOS ALUMNOS"<<endl;
+    for (int i = 0; i < alumnos.size(); i++) {
+        cout<<endl;
+        alumnos[i].mostrar();
+    }
+
+    cout<<endl<<"RESULTADO DE CADA ALUMNO"<<endl;
+    for (int i = 0; i < alumnos.size(); i++) {
+        if (alumnos[i].estaAprobado()) {
+            cout<<alumnos[i].getNombre()<<": Aprobado"<<endl;
+        } else {
+            cout<<alumnos[i].getNombre()<<": Desaprobado"<<endl;
+        }
+    }
+
+    return 0;
+}
